@@ -2,26 +2,26 @@
 
 Experimental recovery development project for Galaxian (Nothing Phone (3a) Lite).
 
-> Current project is a host-buildable diagnostic and rendering core. It is not a flashable recovery image and does not access the device framebuffer.
+> Current code is a host-buildable rendering core. The Linux framebuffer backend is implemented but not yet verified on Galaxian; this is not a flashable recovery image.
 
-## Current features
-- C++17 core
-- Logger: INFO/WARN/ERROR, timestamps, bounded in-memory log
-- Host Canvas: RGB color, pixel access, clear, clipped rectangles
-- Compact 5x7 ASCII bitmap font, scalable text
-- GitHub Actions CI
+## Features
+- C++17 core and bounded logger
+- Canvas RGB pixels, clipping, rectangles, scalable 5x7 ASCII text
+- Linux fbdev backend: open device, query format/geometry, map framebuffer, convert RGB into bitfields, present canvas with bounds checks
+- Host CI builds backend without touching hardware
 
-## Build
+## Host build
 ```sh
 cmake -S . -B build
 cmake --build build
 ./build/nova-core
 ```
 
-## Layout
-- include/nova/logger.hpp and src/logger.cpp — logger
-- include/nova/renderer.hpp and src/renderer.cpp — canvas rendering
-- src/main.cpp — smoke test/demo
-- .github/workflows/build.yml — CI
+## Files
+- include/nova/renderer.hpp, src/renderer.cpp — Canvas and drawing
+- include/nova/framebuffer.hpp, src/framebuffer.cpp — Linux framebuffer backend
+- include/nova/logger.hpp, src/logger.cpp — logging
+- src/main.cpp — host smoke test
 
-Planned: device framebuffer backend, display initialization research, input handling, recovery UI.
+## Notes
+The framebuffer backend requires a Linux framebuffer device and permission to open it. The target recovery may use fbdev, DRM, or a vendor display stack; verify the device's display path before attempting integration. This backend is not used to write partitions or change device configuration.
