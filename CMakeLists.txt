@@ -1,10 +1,16 @@
 cmake_minimum_required(VERSION 3.16)
-project(NOVARecovery VERSION 0.0.3 LANGUAGES CXX)
+project(NOVARecovery VERSION 0.0.4 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-add_executable(nova-core src/main.cpp src/logger.cpp src/renderer.cpp src/framebuffer.cpp)
+add_executable(nova-core
+    src/main.cpp
+    src/logger.cpp
+    src/renderer.cpp
+    src/framebuffer.cpp
+    src/recovery_display_stub.cpp
+)
 target_include_directories(nova-core PRIVATE include)
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
- target_compile_options(nova-core PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(nova-core PRIVATE -Wall -Wextra -Wpedantic)
 endif()
