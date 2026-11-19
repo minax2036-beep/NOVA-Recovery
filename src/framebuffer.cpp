@@ -46,7 +46,8 @@ bool FramebufferBackend::present(const Canvas& canvas){
  const int copyWidth=std::min(width_,canvas.width()),copyHeight=std::min(height_,canvas.height());
  const auto& source=canvas.pixels();
  auto pack=[](std::uint8_t channel,unsigned int offset,unsigned int length)->std::uint32_t{
-  if(length==0)return 0;const std::uint64_t maxValue=(length>=32)?0xffffffffULL:((1ULL<<length)-1ULL);
+  if(length==0)return 0;
+  const std::uint64_t maxValue=(length>=32)?0xffffffffULL:((1ULL<<length)-1ULL);
   return static_cast<std::uint32_t>((static_cast<std::uint64_t>(channel)*maxValue/255ULL)<<offset);
  };
  auto* base=static_cast<std::uint8_t*>(mapping_);
