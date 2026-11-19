@@ -8,7 +8,7 @@ cc_library_static {
         "src/recovery_display_minui.cpp",
     ],
     export_include_dirs: ["include"],
-    shared_libs: ["libminui"],
+    static_libs: ["libminui"],
     cflags: ["-Wall", "-Wextra", "-Wpedantic"],
     cppflags: ["-std=c++17"],
 }

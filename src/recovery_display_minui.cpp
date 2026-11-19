@@ -31,8 +31,8 @@ bool RecoveryDisplay::present(const Canvas& canvas) {
         lastError_ = "canvas has invalid dimensions";
         return false;
     }
-    // minui has a portable fill API instead of exposing its pixel buffer.
-    // Scale the NOVA canvas and submit horizontal color runs as rectangles.
+    // minui's gr_fill takes exclusive bottom-right coordinates, not width/height.
+    // Convert Canvas into scaled horizontal color runs, then submit rectangles.
     const auto& pixels = canvas.pixels();
     for (int sy = 0; sy < canvas.height(); ++sy) {
         const int y0 = static_cast<int>((static_cast<int64_t>(sy) * height_) / canvas.height());
@@ -48,15 +48,12 @@ bool RecoveryDisplay::present(const Canvas& canvas) {
             const int x1 = static_cast<int>((static_cast<int64_t>(end) * width_) / canvas.width());
             if (x1 > x0) {
                 gr_color(color.r, color.g, color.b, 255);
-                gr_fill(x0, y0, x1 - x0, y1 - y0);
+                gr_fill(x0, y0, x1, y1);
             }
             sx = end;
         }
     }
-    if (gr_flip() != 0) {
-        lastError_ = "minui gr_flip() failed";
-        return false;
-    }
+    gr_flip();
     lastError_.clear();
     return true;
 }

@@ -14,7 +14,7 @@ int main(){
  canvas.fillRect(16,130,120,18,nova::colors::Blue);canvas.drawText(20,135,"BOOT",nova::colors::White);
  canvas.drawText(16,168,"ANDROID FB BACKEND",nova::colors::Gray);
  canvas.drawText(16,180,"NOT OPENED IN HOST TEST",nova::colors::Gray);
- if(canvas.getPixel(0,0)!=nova::colors::Cyan||canvas.getPixel(20,135)!=nova::colors::Blue){nova::Logger::error("Canvas test failed");return 1;}
+ if(canvas.getPixel(0,0)!=nova::colors::Cyan||canvas.getPixel(17,131)!=nova::colors::Blue){nova::Logger::error("Canvas test failed");return 1;}
  nova::FramebufferBackend backend;
  std::cout<<"NOVA Canvas test: PASS\nFramebuffer backend compiled: ";
 #if defined(__linux__)
