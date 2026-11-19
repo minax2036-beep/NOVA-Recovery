@@ -1,32 +1,30 @@
 # NOVA Recovery
 
-Experimental custom recovery development for Nothing Phone (3a) Lite / Galaxian.
+Experimental recovery development project for Galaxian (Nothing Phone (3a) Lite).
 
-## Current stage
+> This repository is currently a host-buildable diagnostic core. It does not produce a flashable recovery image.
 
-- C++17 core prototype
-- Lightweight logger (INFO/WARN/ERROR)
-- GitHub Actions host build
-- No device-specific recovery image yet
+## Current features
+- C++17 core
+- Logger levels: INFO / WARN / ERROR
+- Timestamped log entries
+- Thread-safe in-memory log snapshot
+- Bounded log buffer (256 entries)
+- Console output
+- GitHub Actions CI
 
-## Build locally
+## Host build
 
-```bash
+```sh
 cmake -S . -B build
 cmake --build build
 ./build/nova-core
 ```
 
-This currently builds a host-side core prototype. It is not a flashable or bootable recovery image.
+## Layout
+- `include/nova/logger.hpp` — logger API
+- `src/logger.cpp` — implementation
+- `src/main.cpp` — test/demo
+- `.github/workflows/build.yml` — CI build
 
-## Planned milestones
-
-1. Core logging and diagnostics
-2. UI rendering foundation
-3. Input handling
-4. Device diagnostics
-5. Recovery-platform integration and controlled device testing
-
-## Safety
-
-Early testing is intended to use temporary boot workflows and non-destructive diagnostics. Avoid partition writes or userdata operations during initial development.
+Planned: recovery display integration, input handling, diagnostic UI, device-specific development.
