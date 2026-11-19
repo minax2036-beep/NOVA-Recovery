@@ -2,19 +2,16 @@
 
 Experimental recovery development project for Galaxian (Nothing Phone (3a) Lite).
 
-> This repository is currently a host-buildable diagnostic core. It does not produce a flashable recovery image.
+> Current project is a host-buildable diagnostic and rendering core. It is not a flashable recovery image and does not access the device framebuffer.
 
 ## Current features
 - C++17 core
-- Logger levels: INFO / WARN / ERROR
-- Timestamped log entries
-- Thread-safe in-memory log snapshot
-- Bounded log buffer (256 entries)
-- Console output
+- Logger: INFO/WARN/ERROR, timestamps, bounded in-memory log
+- Host Canvas: RGB color, pixel access, clear, clipped rectangles
+- Compact 5x7 ASCII bitmap font, scalable text
 - GitHub Actions CI
 
-## Host build
-
+## Build
 ```sh
 cmake -S . -B build
 cmake --build build
@@ -22,9 +19,9 @@ cmake --build build
 ```
 
 ## Layout
-- `include/nova/logger.hpp` — logger API
-- `src/logger.cpp` — implementation
-- `src/main.cpp` — test/demo
-- `.github/workflows/build.yml` — CI build
+- include/nova/logger.hpp and src/logger.cpp — logger
+- include/nova/renderer.hpp and src/renderer.cpp — canvas rendering
+- src/main.cpp — smoke test/demo
+- .github/workflows/build.yml — CI
 
-Planned: recovery display integration, input handling, diagnostic UI, device-specific development.
+Planned: device framebuffer backend, display initialization research, input handling, recovery UI.
