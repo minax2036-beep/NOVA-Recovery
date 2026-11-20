@@ -1,7 +1,7 @@
 # NOVA Recovery
 Experimental recovery development project for Galaxian (Nothing Phone (3a) Lite).
 
-> Current code is a host-buildable rendering core and display adapter. This is not a flashable recovery image.
+> Current code is a host-buildable rendering core and display adapter. `test.img` is a PPM RGB preview image, not a flashable recovery/boot image.
 
 ## Recovery graphics investigation
 The collected Galaxian Recovery files indicate:
@@ -22,13 +22,19 @@ NOVA uses its own Canvas and a small minui adapter. It does not reuse or link No
 - Host CMake: stub backend; CI never accesses hardware.
 - Linux fbdev backend remains a separate experiment, not assumed to be Galaxian's active path.
 
-## Host build and tests
+## test.img preview output
+The host diagnostic program renders the NOVA main menu into a 320x240 RGB canvas and writes `test.img` in PPM P6 format (RGB888). It is intended for UI preview/testing only. Despite the extension, this is **not** a bootable image, recovery image, or partition image.
+
+To generate it locally:
 ```sh
 cmake -S . -B build
 cmake --build build --parallel 2
 ctest --test-dir build --output-on-failure
-# Tests include Canvas/core smoke, minui adapter, and RecoveryUI navigation.
+./build/nova-core
+# output: build/test.img
 ```
+
+GitHub Actions uploads the file as the `NOVA-test-img` artifact on successful builds (14-day retention).
 
 ## Android integration
 `Android.bp` defines recovery-available static library `libnova_recovery_display` with minui adapter and static dependency on `libminui`.
@@ -36,4 +42,4 @@ ctest --test-dir build --output-on-failure
 Build it inside a compatible Android Recovery source tree. This is a library component only: it is not yet connected to AOSP recovery's UI loop, touch/input handling, device configuration, ramdisk packaging, or boot image build.
 
 ## Safety/status
-No partitions are written. Do not treat current sources as a bootable image.
+No partitions are written. Do not treat `test.img` as a bootable image.
