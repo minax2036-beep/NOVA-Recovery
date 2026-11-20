@@ -15,6 +15,8 @@ NOVA uses its own Canvas and a small minui adapter. It does not reuse or link No
 
 ## Architecture
 - NOVA Canvas: RGB pixels, clipping, rectangles, 5x7 ASCII text.
+- `RecoveryUI`: initial main menu, selection wrap-around, placeholder information screens, and a log viewer.
+- Main menu entries: Reboot, Apply Update, Wipe, Mount, Advanced, Logs. These are UI placeholders only; no device operation is implemented.
 - `RecoveryDisplay`: display abstraction.
 - Android Recovery build: `recovery_display_minui.cpp`, using minui `gr_init`, framebuffer dimensions, `gr_color`, `gr_fill`, and `gr_flip`.
 - Host CMake: stub backend; CI never accesses hardware.
@@ -25,6 +27,7 @@ NOVA uses its own Canvas and a small minui adapter. It does not reuse or link No
 cmake -S . -B build
 cmake --build build --parallel 2
 ctest --test-dir build --output-on-failure
+# Tests include Canvas/core smoke, minui adapter, and RecoveryUI navigation.
 ```
 
 ## Android integration
