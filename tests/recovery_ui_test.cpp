@@ -12,8 +12,8 @@ int main() {
     assert(ui.menuItems().size() == 6);
 
     ui.render(canvas);
-    assert(canvas.getPixel(0, 0) == nova::Color{30, 205, 220});
-    assert(canvas.getPixel(8, 52) == nova::Color{27, 75, 105});
+    assert((canvas.getPixel(0, 0) == nova::Color{30, 205, 220}));
+    assert((canvas.getPixel(10, 52) == nova::Color{27, 75, 105}));
 
     ui.handleKey(nova::RecoveryKey::Up);
     assert(ui.selectedIndex() == 5); // Wrap around.
