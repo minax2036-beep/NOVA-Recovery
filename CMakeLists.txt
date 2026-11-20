@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(NOVARecovery VERSION 0.0.4 LANGUAGES CXX)
+project(NOVARecovery VERSION 0.0.5 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -10,8 +10,17 @@ add_executable(nova-core
     src/renderer.cpp
     src/framebuffer.cpp
     src/recovery_display_stub.cpp
+    src/recovery_ui.cpp
 )
 target_include_directories(nova-core PRIVATE include)
+
+add_executable(nova-recovery-ui-test
+    tests/recovery_ui_test.cpp
+    src/recovery_ui.cpp
+    src/logger.cpp
+    src/renderer.cpp
+)
+target_include_directories(nova-recovery-ui-test PRIVATE include)
 
 add_executable(nova-minui-adapter-test
     tests/minui_adapter_test.cpp
@@ -24,8 +33,10 @@ target_include_directories(nova-minui-adapter-test PRIVATE include tests/minui_s
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     target_compile_options(nova-core PRIVATE -Wall -Wextra -Wpedantic)
     target_compile_options(nova-minui-adapter-test PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(nova-recovery-ui-test PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 
 enable_testing()
 add_test(NAME nova-core-smoke COMMAND nova-core)
 add_test(NAME nova-minui-adapter COMMAND nova-minui-adapter-test)
+add_test(NAME nova-recovery-ui COMMAND nova-recovery-ui-test)
