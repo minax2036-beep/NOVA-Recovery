@@ -27,7 +27,8 @@ int main() {
     ui.handleKey(nova::RecoveryKey::Back);
     assert(ui.screen() == nova::RecoveryScreen::MainMenu);
 
-    for (int i = 0; i < 5; ++i) ui.handleKey(nova::RecoveryKey::Down);
+    // Selection is still at index 1; four moves wrap to index 5.
+    for (int i = 0; i < 4; ++i) ui.handleKey(nova::RecoveryKey::Down);
     assert(ui.selectedIndex() == 5);
     ui.handleKey(nova::RecoveryKey::Select);
     assert(ui.screen() == nova::RecoveryScreen::Logs);
