@@ -20,12 +20,16 @@ jobs:
         run: cmake --build build --parallel 2
       - name: Run host tests
         run: ctest --test-dir build --output-on-failure
-      - name: Run diagnostic demo and generate test.img
+      - name: Generate UI preview
         run: ./build/nova-core
-      - name: Upload test image
+      - name: Generate boot splash preview
+        run: ./build/nova-recovery-boot-sim
+      - name: Upload preview images
         uses: actions/upload-artifact@v4
         with:
-          name: NOVA-test-img
-          path: build/test.img
+          name: NOVA-host-previews
+          path: |
+            build/test.img
+            build/boot-preview.ppm
           if-no-files-found: error
           retention-days: 14
