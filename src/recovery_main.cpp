@@ -4,7 +4,7 @@
 namespace {
 
 void log(std::string_view message) {
-    std::cout << "[NOVA] " << message << '\\n';
+    std::cout << "[NOVA] " << message << '\n';
 }
 
 bool initializeDisplay() {
@@ -35,6 +35,6 @@ int main() {
 
     log("Initialization complete");
     log("Status: READY");
-    std::cout << "\\nNOVA Recovery Alpha 0 boot simulation: PASS\\n";
+    std::cout << "\nNOVA Recovery Alpha 0 boot simulation: PASS\n";
     return 0;
 }
